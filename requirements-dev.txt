@@ -1,0 +1,20 @@
+# 開發和測試工具
+pytest==7.4.3
+black==23.9.1
+isort==5.12.0
+flake8==6.1.0
+requests==2.31.0
+roboflow==1.1.9
+
+# 現有的生產依賴（從 inference/requirements.txt）
+ultralytics==8.3.0
+fastapi
+uvicorn[standard]
+python-multipart
+transformers
+accelerate
+sentencepiece
+safetensors
+Pillow
+qrcode[pil]
+supabase==2.6.0

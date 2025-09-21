@@ -1,0 +1,55 @@
+### 鞋類 NGO API 測試檔案
+### 使用 REST Client 擴展來測試 API
+
+@api_base = http://localhost:7860
+
+### 1. 健康檢查
+GET {{api_base}}/
+
+### 2. 測試圖片分析 - 使用 form-data
+POST {{api_base}}/analyze
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="img"; filename="test_shoe.jpg"
+Content-Type: image/jpeg
+
+< ./test_images/shoe_sample.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="user_email"
+
+test@example.com
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="brand"
+
+Nike
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="model_name"
+
+Air Force 1
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### 3. 測試 Colab 部署的 API（使用 cloudflare tunnel）
+@colab_api = https://your-tunnel-url.trycloudflare.com
+
+POST {{colab_api}}/analyze
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="img"; filename="test_shoe.jpg"
+Content-Type: image/jpeg
+
+< ./test_images/shoe_sample.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="user_email"
+
+test@example.com
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="brand"
+
+Adidas
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="model_name"
+
+Stan Smith
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
