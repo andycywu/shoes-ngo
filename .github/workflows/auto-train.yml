@@ -1,0 +1,18 @@
+name: auto-train
+on:
+  schedule:
+    - cron: "0 16 * * *" # UTC 16:00 ≈ 台北 00:00
+  workflow_dispatch: {}
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install supabase==2.6.0 ultralytics==8.3.0
+      - env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: python training/pipeline.py

@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Admin</title></head>
+<body>
+  <input id="api" placeholder="API base" size="60">
+  <input id="token" placeholder="ADMIN_TOKEN" size="40"><br><br>
+
+  <button id="start">Start Cold Start</button>
+  <button id="list">List Runs</button><br><br>
+
+  <input id="runid" placeholder="run_id" size="40">
+  <input id="model" placeholder="model_name (e.g. yolo_stage2)" size="30">
+  <input id="ver" placeholder="version (optional)" size="25">
+  <button id="approve">Approve Run</button>
+
+  <pre id="out"></pre>
+
+<script>
+const out = document.getElementById('out');
+function hdr(){ return { 'x-admin-token': document.getElementById('token').value }; }
+start.onclick = async () => {
+  const r = await fetch(document.getElementById('api').value + '/admin/start_cold_start', { method:'POST', headers: hdr() });
+  out.textContent = JSON.stringify(await r.json(), null, 2);
+};
+list.onclick = async () => {
+  const r = await fetch(document.getElementById('api').value + '/admin/runs', { headers: hdr() });
+  out.textContent = JSON.stringify(await r.json(), null, 2);
+};
+approve.onclick = async () => {
+  const body = new URLSearchParams({ run_id: runid.value, model_name: model.value, version: ver.value });
+  const r = await fetch(document.getElementById('api').value + '/admin/approve_run', { method:'POST', headers: hdr(), body });
+  out.textContent = JSON.stringify(await r.json(), null, 2);
+};
+</script>
+</body></html>
