@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+inference/models/
+.env
+.ipynb_checkpoints/

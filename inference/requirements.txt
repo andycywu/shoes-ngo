@@ -1,0 +1,11 @@
+ultralytics==8.3.0
+fastapi
+uvicorn[standard]
+python-multipart
+transformers
+accelerate
+sentencepiece
+safetensors
+Pillow
+qrcode[pil]
+supabase==2.6.0

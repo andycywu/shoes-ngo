@@ -1,0 +1,27 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Shoes NGO</title></head>
+<body>
+  <h3>Upload Shoe Image</h3>
+  <input type="file" id="file" accept="image/*" capture="environment"><br/>
+  <input id="brand" placeholder="Brand"/>
+  <input id="model" placeholder="Model"/>
+  <input id="api" placeholder="API base (e.g. https://xxx.trycloudflare.com)" size="70"/>
+  <button id="btn">Analyze</button>
+  <pre id="out"></pre>
+  <img id="qr" style="max-width:300px;display:none;"/>
+<script>
+btn.onclick = async () => {
+  const api = document.getElementById('api').value.trim();
+  const f = document.getElementById('file').files[0];
+  if(!api || !f){ alert('Set API and pick a file'); return; }
+  const fd = new FormData();
+  fd.append('img', f);
+  fd.append('brand', brand.value);
+  fd.append('model_name', model.value);
+  const r = await fetch(api + '/analyze', { method:'POST', body: fd });
+  const j = await r.json();
+  out.textContent = JSON.stringify(j,null,2);
+  if(j.qr_b64){ qr.style.display='block'; qr.src='data:image/png;base64,'+j.qr_b64; }
+  else { qr.style.display='none'; }
+};
+</script>
+</body></html>
